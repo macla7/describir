@@ -65,14 +65,24 @@ export function Header() {
           <IconGitHub />
           <span className="hidden ml-2 md:flex">GitHub</span>
         </a>
-        <a
-          href="https://vercel.com/templates/Next.js/nextjs-ai-chatbot"
-          target="_blank"
-          className={cn(buttonVariants())}
-        >
+        <a className={cn(buttonVariants())}>
           <IconVercel className="mr-2" />
-          <span className="hidden sm:block">Deploy to Vercel</span>
-          <span className="sm:hidden">Deploy</span>
+
+          <Link href="/login">
+            <span className="hidden sm:block">Join Game</span>
+          </Link>
+          <Link href="/login">
+            <span className="sm:hidden">Join</span>
+          </Link>
+        </a>
+        <a className={cn(buttonVariants())}>
+          <IconVercel className="mr-2" />
+          <Link href="/login">
+            <span className="hidden sm:block">Create Game</span>
+          </Link>
+          <Link href="/login">
+            <span className="sm:hidden">Create</span>
+          </Link>
         </a>
       </div>
     </header>

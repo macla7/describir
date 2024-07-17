@@ -1,4 +1,5 @@
 import { CoreMessage } from 'ai'
+import NextAuth, { DefaultSession } from 'next-auth'
 
 export type Message = CoreMessage & {
   id: string
@@ -37,5 +38,11 @@ export interface User extends Record<string, any> {
   id: string
   email: string
   password: string
+  salt: string
+}
+
+export interface Guest extends Record<string, any> {
+  id: string
+  name: string
   salt: string
 }
