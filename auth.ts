@@ -10,12 +10,6 @@ import Facebook from 'next-auth/providers/facebook'
 import Google from 'next-auth/providers/google'
 import Twitter from 'next-auth/providers/twitter'
 
-import { createStorage } from 'unstorage'
-import memoryDriver from 'unstorage/drivers/memory'
-import vercelKVDriver from 'unstorage/drivers/vercel-kv'
-import { UnstorageAdapter } from '@auth/unstorage-adapter'
-import type { NextAuthConfig } from 'next-auth'
-
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [

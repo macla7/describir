@@ -1,4 +1,5 @@
 import type { NextAuthConfig } from 'next-auth'
+import 'next-auth/jwt'
 import DesIcon from './public/des-icon-48-round.png'
 
 export const authConfig = {
@@ -34,6 +35,7 @@ export const authConfig = {
     async session({ session, token }) {
       console.log('session callback being CALLED')
       if (token) {
+        // const { id } = token as { id: string }
         const { id } = token as { id: string }
         const { user } = session
 

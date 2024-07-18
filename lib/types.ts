@@ -1,5 +1,4 @@
 import { CoreMessage } from 'ai'
-import NextAuth, { DefaultSession } from 'next-auth'
 
 export type Message = CoreMessage & {
   id: string

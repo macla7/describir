@@ -4,7 +4,7 @@ import NextAuth, { DefaultSession } from 'next-auth'
 declare module 'next-auth' {
   interface Session {
     user: {
-      id: number
+      id: string
       name: string
       email: string
       isGuest?: boolean
@@ -12,7 +12,7 @@ declare module 'next-auth' {
   }
 
   interface JWT {
-    id: number
+    id: string
     name: string
     email: string
     isGuest?: boolean
