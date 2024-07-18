@@ -5,9 +5,24 @@ import { z } from 'zod'
 import { getStringFromBuffer } from './lib/utils'
 import { getUser } from './app/login/actions'
 
-export const { auth, signIn, signOut } = NextAuth({
+import Apple from 'next-auth/providers/apple'
+import Facebook from 'next-auth/providers/facebook'
+import Google from 'next-auth/providers/google'
+import Twitter from 'next-auth/providers/twitter'
+
+import { createStorage } from 'unstorage'
+import memoryDriver from 'unstorage/drivers/memory'
+import vercelKVDriver from 'unstorage/drivers/vercel-kv'
+import { UnstorageAdapter } from '@auth/unstorage-adapter'
+import type { NextAuthConfig } from 'next-auth'
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
+    Apple,
+    Facebook,
+    Google,
+    Twitter,
     Credentials({
       async authorize(credentials) {
         const parsedCredentials = z
@@ -43,3 +58,25 @@ export const { auth, signIn, signOut } = NextAuth({
     })
   ]
 })
+
+// <script>
+//   window.fbAsyncInit = function() {
+//     FB.init({
+//       appId      : '{your-app-id}',
+//       cookie     : true,
+//       xfbml      : true,
+//       version    : '{api-version}'
+//     });
+
+//     FB.AppEvents.logPageView();
+
+//   };
+
+//   (function(d, s, id){
+//      var js, fjs = d.getElementsByTagName(s)[0];
+//      if (d.getElementById(id)) {return;}
+//      js = d.createElement(s); js.id = id;
+//      js.src = "https://connect.facebook.net/en_US/sdk.js";
+//      fjs.parentNode.insertBefore(js, fjs);
+//    }(document, 'script', 'facebook-jssdk'));
+// </script>

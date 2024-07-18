@@ -1,13 +1,16 @@
 import type { NextAuthConfig } from 'next-auth'
+import DesIcon from './public/des-icon-48-round.png'
 
 export const authConfig = {
+  theme: { logo: DesIcon.src },
   secret: process.env.AUTH_SECRET,
   pages: {
-    signIn: '/login',
+    // signIn: '/login',
     newUser: '/signup'
   },
   callbacks: {
     async authorized({ auth, request: { nextUrl } }) {
+      console.log('authorized callback being CALLED')
       const isLoggedIn = !!auth?.user
       const isOnLoginPage = nextUrl.pathname.startsWith('/login')
       const isOnSignupPage = nextUrl.pathname.startsWith('/signup')
@@ -21,6 +24,7 @@ export const authConfig = {
       return true
     },
     async jwt({ token, user }) {
+      console.log('jwt callback being CALLED')
       if (user) {
         token = { ...token, id: user.id }
       }
@@ -28,6 +32,7 @@ export const authConfig = {
       return token
     },
     async session({ session, token }) {
+      console.log('session callback being CALLED')
       if (token) {
         const { id } = token as { id: string }
         const { user } = session
@@ -38,5 +43,8 @@ export const authConfig = {
       return session
     }
   },
-  providers: []
+  providers: [],
+  // below is from nextAuth example project:
+  // https://github.com/nextauthjs/next-auth-example/blob/main/auth.ts
+  debug: process.env.NODE_ENV !== 'production' ? true : false
 } satisfies NextAuthConfig

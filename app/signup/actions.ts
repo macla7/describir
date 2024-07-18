@@ -48,6 +48,7 @@ export async function signup(
   const email = formData.get('email') as string
   const password = formData.get('password') as string
 
+  // some kind of type checking using this z business
   const parsedCredentials = z
     .object({
       email: z.string().email(),
@@ -58,6 +59,7 @@ export async function signup(
       password
     })
 
+  // now we're making the hashed password...? Sheesh
   if (parsedCredentials.success) {
     const salt = crypto.randomUUID()
 
@@ -69,6 +71,8 @@ export async function signup(
     )
     const hashedPassword = getStringFromBuffer(hashedPasswordBuffer)
 
+    // now with hashedpassword and email.. and salt.. whatever that is..
+    // we are creating user..
     try {
       const result = await createUser(email, hashedPassword, salt)
 
@@ -103,6 +107,8 @@ export async function signup(
       }
     }
   } else {
+    // back to invalid credentials error code here.. interesting chain lol..
+    // invalid -> unknown -> unknown -> invalid
     return {
       type: 'error',
       resultCode: ResultCode.InvalidCredentials
