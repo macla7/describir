@@ -31,9 +31,9 @@ export const authConfig = {
       }
 
       if (account?.provider === 'apple') {
-        token.id = user?.id || profile.sub
-        token.email = user?.email || profile.email
-        token.name = user?.name || profile.name
+        token.id = user?.id || profile?.sub
+        token.email = user?.email || profile?.email
+        token.name = user?.name || profile?.name
       }
 
       return token
