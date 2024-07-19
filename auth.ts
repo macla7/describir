@@ -13,7 +13,24 @@ import Twitter from 'next-auth/providers/twitter'
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
-    Apple,
+    Apple({
+      clientId: process.env.AUTH_APPLE_ID,
+      clientSecret: process.env.AUTH_APPLE_SECRET as string,
+      authorization: {
+        url: 'https://appleid.apple.com/auth/authorize',
+        params: {
+          scope: 'openid email name'
+        }
+      },
+      profile(profile) {
+        // Extract user information from the ID token
+        return {
+          id: profile.sub,
+          name: profile.name || profile.email.split('@')[0],
+          email: profile.email
+        }
+      }
+    }),
     Facebook,
     Google,
     Twitter,
