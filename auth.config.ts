@@ -24,10 +24,16 @@ export const authConfig = {
 
       return true
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account, profile }) {
       console.log('jwt callback being CALLED')
       if (user) {
         token = { ...token, id: user.id }
+      }
+
+      if (account?.provider === 'apple') {
+        token.id = user?.id || profile.sub
+        token.email = user?.email || profile.email
+        token.name = user?.name || profile.name
       }
 
       return token

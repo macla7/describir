@@ -33,22 +33,31 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       client: {
         token_endpoint_auth_method: 'client_secret_post'
       },
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name || null,
-          email: profile.email || null,
-          image: null
-        }
-      },
-      profileConform(profile, query) {
-        if (query.user) {
-          const user = JSON.parse(query.user)
-          if (user.name) {
-            profile.name = Object.values(user.name).join(' ')
+      profile(profile, tokens) {
+        if (tokens.id_token) {
+          // Parse the ID token to extract profile information
+          const decodedToken = JSON.parse(
+            Buffer.from(tokens.id_token.split('.')[1], 'base64').toString()
+          )
+
+          return {
+            id: decodedToken.sub,
+            name: decodedToken.name
+              ? `${decodedToken.name.firstName} ${decodedToken.name.lastName}`
+              : profile.email.split('@')[0],
+            email: decodedToken.email,
+            image: null
           }
         }
-        return profile
+
+        return {
+          id: profile.sub,
+          name: profile.name
+            ? `${profile.name.firstName} ${profile.name.lastName}`
+            : profile.email.split('@')[0],
+          email: profile.email,
+          image: null
+        }
       }
     }),
     Facebook,
