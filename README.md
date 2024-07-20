@@ -69,3 +69,17 @@ This library is created by [Vercel](https://vercel.com) and [Next.js](https://ne
 - Jared Palmer ([@jaredpalmer](https://twitter.com/jaredpalmer)) - [Vercel](https://vercel.com)
 - Shu Ding ([@shuding\_](https://twitter.com/shuding_)) - [Vercel](https://vercel.com)
 - shadcn ([@shadcn](https://twitter.com/shadcn)) - [Vercel](https://vercel.com)
+
+## Problems/Solutions
+
+### Apple Sign In with NextAuth
+
+NextAuth Apple solution. The problem seemed to be Apple does 'not provide a userinfo endpoint' like everybody else.... This seemed to be a long running problem for NextAuth.. See [here](https://github.com/nextauthjs/next-auth/issues/6788).
+
+I used a combination of [this guys](https://github.com/nextauthjs/next-auth/issues/6788#issuecomment-2099958734) and [this other guys](https://github.com/nextauthjs/next-auth/issues/6788#issuecomment-2169341784) solution.. With a minor edit to the Profile option function in the Apple Provider... Edit supplied/suggested by Chat GPT... and also the callbacks bit too... NOT SURE specifically which bit fixed it finally, the change to the profile function or the callbacks bit tailored for Apple...
+
+Context of the issue, creators of NextAuth just seem to be stubborn and unwilling to adapt to Apple's strange/unique way of doing it... fair enough but also ffs...
+
+One of the creators literally suggested to patch the package (band aid soltion) in order to make the apple sign in work... why not just merge REE.. see admins posts [here](https://github.com/nextauthjs/next-auth/issues/6788#issuecomment-2156123665)
+
+Also, somewhat zooming out a level, Apple is a pain and doesn't allow us to test the sign in on a http server.. so I can't test with localhost... so can only test with legit URL... how annoying...
